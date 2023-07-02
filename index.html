@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Minha Conta Bancária</title>
+    <link rel="stylesheet" type="text/css" href="style.css">
+</head>
+<body>
+    <h1>Ol&aacute;, Bem vindo(a) a sua conta banc&aacute;ria.</h1>
+
+    <div class="Container">
+        <div class="item">
+        <button onclick="identificacao()">Entrar</button>
+        <button onclick="ver_saldo()">Ver Saldo</button>
+        <button onclick="fazer_deposito()">Fazer Depósito</button>
+        <button onclick="fazer_saque()">Fazer Saque</button>
+        <button onclick="extrato()">Extrato</button>
+        <button onclick="conta_transferencia()">Transferência</button>
+        <button onclick="sair()">Sair</button>
+        </div>
+</div>
+
+    <main>
+
+     <p> Esqueceu sua senha? Des&ccedil;a a tela.</p>
+
+    </main>
+    <footer>
+    <p> 5702</p>
+    </footer>
+ 
+ <script>
+    var saldo = 826.50;
+var senha_ja_informada = false;
+var nomeUsuario;
+
+function identificacao() {
+    var nome = prompt("Por favor, informe seu nome");
+    alert("Olá " + nome + ", obrigada por confiar em nossos serviços, sua senha será 5702");
+    return nome;
+}
+
+function acesso(){
+				if(senha_ja_informada){
+					return true;
+				} else {
+					var inserir_senha = prompt(`Digite sua senha`)
+
+					if(inserir_senha == 5702){
+						return true;
+					} else{
+						confirm('A senha está incorreta. Tente novamente.');
+						acesso();
+					}
+				}
+			}
+
+
+
+
+
+function inicio() {
+    var escolha = parseInt(prompt('Selecione uma opção 1.) Saldo 2.) Depósito 3.) Saque 4.) Extrato 5.) Transferência 6.) Sair'));
+
+    switch (escolha) {
+        case 1:
+            ver_saldo();
+            break;
+        case 2:
+            fazer_deposito();
+            break;
+        case 3:
+            fazer_saque();
+            break;
+        case 4:
+            extrato();
+            break;
+        case 5:
+            conta_transferencia();
+            break;
+        case 6:
+            sair();
+            break;
+        default:
+            alert("Escolha inválida. Tente novamente.");
+            inicio();
+    }
+}
+
+function ver_saldo() {
+    if (acesso()) {
+        alert("Seu saldo é: " + saldo);
+
+        inicio();
+    } else {
+        ver_saldo();
+    }
+}
+
+
+function fazer_deposito() {
+    var deposito = parseFloat(prompt("Qual o valor para depósito?"));
+
+    if (isNaN(deposito) || deposito === "") {
+        alert("Por favor, informe um número válido.");
+        fazer_deposito();
+    } else if (deposito <= 0) {
+        alert("Operação não autorizada. O valor de depósito tem que ser maior que 0.");
+    } else {
+        saldo += deposito;
+        ver_saldo();
+    }
+}
+
+function fazer_saque() {
+    var saque = parseFloat(prompt("Qual o valor para saque?"));
+
+    if (acesso()) {
+        if (saque <= 0) {
+            alert("Operação não autorizada. O valor de saque tem que ser maior que 0.");
+            inicio();
+        } else if (saque > saldo) {
+            alert("Operação não autorizada. Seu saldo é menor que o valor de saque.");
+            inicio();
+        } else if (isNaN(saque) || saque === "") {
+            alert("Por favor, informe um número válido.");
+            fazer_saque();
+        } else {
+            saldo -= saque;
+            senha_ja_informada = true;
+            ver_saldo();
+        }
+    } else {
+        ver_saldo();
+    }
+}
+     function sair() {
+    let confirma = confirm("Você deseja sair?");}
+
+    sair()
+ </script>
